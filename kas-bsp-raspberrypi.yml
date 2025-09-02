@@ -9,5 +9,5 @@ repos:
   # Raspberry Pi Board Support Package (BSP) layer
   meta-raspberrypi:
     url: "https://github.com/agherzan/meta-raspberrypi.git"
-    refspec: "kirkstone"
+    branch: "kirkstone"
     path: "layers/meta-raspberrypi"
