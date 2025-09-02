@@ -1,0 +1,40 @@
+name: Yocto Build Check
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'kas-*.yml'
+      - 'layers/meta-custom/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'kas-*.yml'
+      - 'layers/meta-custom/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Cache Yocto downloads and sstate
+        uses: actions/cache@v4
+        with:
+          path: |
+            yocto-cache/downloads
+            yocto-cache/sstate-cache
+          key: ${{ runner.os }}-yocto-${{ hashFiles('kas-*.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-yocto-
+
+      - name: Set up kas-container
+        run: |
+          wget https://raw.githubusercontent.com/siemens/kas/master/kas-container
+          chmod +x kas-container
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+          mv kas-container $HOME/.local/bin/
+
+      - name: Build Yocto image
+        run: kas-container build kas-custom.yml
