@@ -31,7 +31,7 @@ jobs:
 
       - name: Install kas
         run: |
-          pip3 install kas-container
+          pip3 install kas
 
       - name: Build image
         run: |
