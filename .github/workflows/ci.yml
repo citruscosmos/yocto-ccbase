@@ -1,0 +1,38 @@
+name: Yocto Build Check
+
+on:
+  push:
+    paths:
+      - '**.yml'
+      - 'layers/meta-custom/**'
+  pull_request:
+    paths:
+      - '**.yml'
+      - 'layers/meta-custom/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: ${{ github.workspace }}
+
+      - name: Cache Yocto downloads and sstate
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ github.workspace }}/yocto-cache/downloads
+            ${{ github.workspace }}/yocto-cache/sstate-cache
+          key: ${{ runner.os }}-yocto-${{ hashFiles('**/kas-custom.yml') }}
+          restore-keys: |
+            ${{ runner.os }}-yocto-
+
+      - name: Install kas
+        run: |
+          pip3 install kas-container
+
+      - name: Build image
+        run: |
+          kas build kas-custom.yml
