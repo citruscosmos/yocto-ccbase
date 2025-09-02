@@ -1,0 +1,13 @@
+header:
+  # kas version
+  version: 14
+  # Include the base configuration from kas-base.yml
+  includes:
+    - kas-base.yml
+
+repos:
+  # Raspberry Pi Board Support Package (BSP) layer
+  meta-raspberrypi:
+    url: "https://github.com/agherzan/meta-raspberrypi.git"
+    refspec: "kirkstone"
+    path: "layers/meta-raspberrypi"
