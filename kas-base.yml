@@ -5,8 +5,8 @@ header:
 defaults:
   # These directories are shared between all configurations.
   # They will be created in the project root directory.
-  dl_dir: "yocto-cache/downloads"
-  sstate_dir: "yocto-cache/sstate-cache"
+  DL_DIR: "yocto-cache/downloads"
+  SSTATE_DIR: "yocto-cache/sstate-cache"
 
 repos:
   # Yocto Project reference distribution
