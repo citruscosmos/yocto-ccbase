@@ -2,10 +2,22 @@ header:
   # kas version
   version: 14
 
+bblayers_conf_header:
+  00_standard: |
+    POKY_BBLAYERS_CONF_VERSION = "2"
+    BBPATH = "${TOPDIR}"
+    BBFILES ?= ""
+
 local_conf_header:
-  0.base: |
+  00_base: |
     DL_DIR ?= "${TOPDIR}/yocto-cache/downloads"
     SSTATE_DIR ?= "${TOPDIR}/yocto-cache/sstate-cache"
+  01_standard: |
+    CONF_VERSION = "2"
+    PACKAGE_CLASSES = "package_rpm"
+    SDKMACHINE = "x86_64"
+    USER_CLASSES = "buildstats"
+    PATCHRESOLVE = "noop"
 
 repos:
   # Yocto Project reference distribution
