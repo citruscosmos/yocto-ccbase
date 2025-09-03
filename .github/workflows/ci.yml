@@ -40,7 +40,7 @@ jobs:
       - name: Display generated conf files
         if: always()
         run: |
-          echo "--- .build/conf/local.conf ---"
-          cat .build/conf/local.conf || echo "local.conf not found."
-          echo "--- .build/conf/bblayers.conf ---"
-          cat .build/conf/bblayers.conf || echo "bblayers.conf not found."
+          echo "--- build/conf/local.conf ---"
+          cat build/conf/local.conf || echo "local.conf not found."
+          echo "--- build/conf/bblayers.conf ---"
+          cat build/conf/bblayers.conf || echo "bblayers.conf not found."
