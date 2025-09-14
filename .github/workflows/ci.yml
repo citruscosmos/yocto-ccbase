@@ -1,0 +1,56 @@
+name: Yocto Build Check
+
+on:
+  push:
+    paths:
+      - '**.yml'
+      - 'layers/meta-custom/**'
+  pull_request:
+    paths:
+      - '**.yml'
+      - 'layers/meta-custom/**'
+
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          path: ${{ github.workspace }}
+
+#      - name: Cache Yocto downloads and sstate
+#        uses: actions/cache@v4
+#        with:
+#          path: |
+#            ${{ github.workspace }}/yocto-cache/downloads
+#            ${{ github.workspace }}/yocto-cache/sstate-cache
+#          key: ${{ runner.os }}-yocto-${{ hashFiles('**/kas-custom.yml') }}
+#          restore-keys: |
+#            ${{ runner.os }}-yocto-
+
+      - name: Install Yocto build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y build-essential chrpath cpio debianutils diffstat file gawk gcc git iputils-ping libacl1 liblz4-tool locales python3 python3-git python3-jinja2 python3-pexpect python3-pip python3-subunit socat texinfo unzip wget xz-utils zstd
+
+#      - name: Install kas
+#        run: |
+#          pip3 install kas
+#
+#      - name: Disable AppArmor user namespace restrictions
+#        run: |
+#          echo 'kernel.apparmor_restrict_unprivileged_userns = 0' | sudo tee /etc/sysctl.d/20-apparmor-donotrestrict.conf
+#          sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
+
+      - name: Build image
+        run: |
+          kas build kas-custom.yml
+
+      - name: Display generated conf files
+        if: always()
+        run: |
+          echo "--- build/conf/local.conf ---"
+          cat build/conf/local.conf || echo "local.conf not found."
+          echo "--- build/conf/bblayers.conf ---"
+          cat build/conf/bblayers.conf || echo "bblayers.conf not found."
