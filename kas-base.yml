@@ -38,8 +38,8 @@ local_conf_header:
     SDKMACHINE = "x86_64"
     USER_CLASSES = "buildstats"
     PATCHRESOLVE = "noop"
-    DL_DIR ?= "${TOPDIR}/yocto-cache/downloads"
-    SSTATE_DIR ?= "${TOPDIR}/yocto-cache/sstate-cache"
+    DL_DIR ?= "${TOPDIR}/../yocto-cache/downloads"
+    SSTATE_DIR ?= "${TOPDIR}/../yocto-cache/sstate-cache"
   b.debug-tweaks: |
     # Settings for easier debugging
     IMAGE_FEATURES += "empty-root-password allow-empty-password allow-root-login post-install-logging"

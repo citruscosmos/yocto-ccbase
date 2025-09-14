@@ -19,15 +19,15 @@ jobs:
         with:
           path: ${{ github.workspace }}
 
-      - name: Cache Yocto downloads and sstate
-        uses: actions/cache@v4
-        with:
-          path: |
-            ${{ github.workspace }}/yocto-cache/downloads
-            ${{ github.workspace }}/yocto-cache/sstate-cache
-          key: ${{ runner.os }}-yocto-${{ hashFiles('**/kas-custom.yml') }}
-          restore-keys: |
-            ${{ runner.os }}-yocto-
+#      - name: Cache Yocto downloads and sstate
+#        uses: actions/cache@v4
+#        with:
+#          path: |
+#            ${{ github.workspace }}/yocto-cache/downloads
+#            ${{ github.workspace }}/yocto-cache/sstate-cache
+#          key: ${{ runner.os }}-yocto-${{ hashFiles('**/kas-custom.yml') }}
+#          restore-keys: |
+#            ${{ runner.os }}-yocto-
 
       - name: Install Yocto build dependencies
         run: |
