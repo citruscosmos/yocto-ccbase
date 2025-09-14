@@ -6,9 +6,10 @@ header:
     - kas-bsp-raspberrypi.yml
 
 # Set the target machine for the build
-machine: "raspberrypi0-2w-64"
-distro: "poky"
-target: "core-image-base"
+machine: raspberrypi0-2w
+distro: poky
+target:
+  - core-image-base
 
 repos:
   # Make kas aware of our local custom layer
@@ -16,17 +17,3 @@ repos:
     # This is a local repository, so we only need to provide the path.
     # The path is relative to this kas file.
     path: "layers/meta-custom"
-    layers:
-      # Add the root of the layer to the build
-      .:
-
-bblayers_conf_header:
-  # This block is inserted into the generated bblayers.conf
-  99_meta_custom: |
-    BBLAYERS += "${TOPDIR}/../layers/meta-custom"
-
-local_conf_header:
-  # This block is inserted into the generated local.conf
-  99_meta_custom: |
-    # Add the 'example' package from our recipe to the final image
-    IMAGE_INSTALL:append = " example"
